@@ -182,6 +182,7 @@ class disposableHostGenerator():
         {'type': 'sha1', 'external': True, 'src': 'https://raw.githubusercontent.com/GeroldSetz/Mailinator-Domains/master/mailinator_domains_from_bdea.cc.txt'},
         {'type': 'list', 'external': True, 'src': 'https://raw.githubusercontent.com/GeroldSetz/emailondeck.com-domains/refs/heads/master/emailondeck.com_domains_from_bdea.cc.txt'},
         {'type': 'json', 'src': 'https://inboxes.com/api/v2/domain'},
+        {'type': 'json', 'src': 'https://deviceandbrowserinfo.com/api/emails/disposable'},
         # currently blocked by cloudflare
         # {'type': 'json', 'src': 'https://mob1.temp-mail.org/request/domains/format/json'},
         {'type': 'json', 'src': 'https://api.internal.temp-mail.io/api/v2/domains'},
