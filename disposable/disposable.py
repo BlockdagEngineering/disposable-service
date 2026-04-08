@@ -825,7 +825,8 @@ class disposableHostGenerator():
                     raise RuntimeError(f"No result for {source}")
             except Exception as err:
                 logging.exception(err)
-                raise err
+                # Continue to next source even if one fails
+                continue
 
         skip = self.skip.copy()
         if not self.options.get('strict'):
@@ -971,13 +972,24 @@ def main():
     dhg = disposableHostGenerator(vars(options))
     if options.list_sources:
         dhg.list_sources()
-    elif dhg.generate() or options.src_filter is not None:
+    elif options.src_filter is not None:
         exit_status = 0
         dhg.write_to_file()
         if options.dedicated_strict:
             dhg.add_greylist()
             dhg.out_file = 'domains_strict'
             dhg.write_to_file()
+    else:
+        # dhg.generate() returns False if no changes were detected
+        # but the fetching process itself was successful
+        result = dhg.generate()
+        exit_status = 0
+        if result:
+            dhg.write_to_file()
+            if options.dedicated_strict:
+                dhg.add_greylist()
+                dhg.out_file = 'domains_strict'
+                dhg.write_to_file()
     sys.exit(exit_status)
 
 
